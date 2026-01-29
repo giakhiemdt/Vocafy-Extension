@@ -25,6 +25,7 @@ const signOutBtn = document.getElementById("sign-out");
 const statusEl = document.getElementById("status");
 const tokenEl = document.getElementById("token");
 const themeToggle = document.getElementById("theme-toggle");
+const themeIcon = document.getElementById("theme-icon");
 let cachedToken = null;
 
 chrome.storage.local.get(["authToken"]).then((result) => {
@@ -36,7 +37,9 @@ const getPreferredTheme = () =>
 
 const updateThemeToggleLabel = (theme) => {
   if (!themeToggle) return;
-  themeToggle.textContent = theme === "dark" ? "🌙" : "☀";
+  if (!themeIcon) return;
+  themeIcon.src = theme === "dark" ? "icons/MoonIcon.png" : "icons/SunIcon.png";
+  themeIcon.alt = theme === "dark" ? "Tối" : "Sáng";
 };
 
 const applyTheme = async (theme, persist = true) => {
