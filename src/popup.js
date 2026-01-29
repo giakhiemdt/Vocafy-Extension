@@ -123,6 +123,27 @@ const exchangeFirebaseToken = async (idToken) => {
   return payload;
 };
 
+const decodeJwtPayload = (token) => {
+  if (!token) return null;
+  const parts = token.split(".");
+  if (parts.length < 2) return null;
+  try {
+    const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), "=");
+    const decoded = atob(padded);
+    return JSON.parse(decoded);
+  } catch (error) {
+    console.warn("Decode JWT failed:", error);
+    return null;
+  }
+};
+
+const saveAccessClaims = async (accessToken) => {
+  const claims = decodeJwtPayload(accessToken);
+  if (!claims) return;
+  await chrome.storage.local.set({ accessClaims: claims });
+};
+
 const saveUser = async (user) => {
   if (!user) {
     await chrome.storage.local.remove([
@@ -130,6 +151,7 @@ const saveUser = async (user) => {
       "authToken",
       "accessToken",
       "refreshToken",
+      "accessClaims",
     ]);
     setToken("");
     return;
@@ -192,7 +214,8 @@ loginBtn.addEventListener("click", async () => {
     const credential = GoogleAuthProvider.credential(null, accessToken);
     const result = await signInWithCredential(auth, credential);
     const idToken = await result.user.getIdToken();
-    await exchangeFirebaseToken(idToken);
+    const exchangePayload = await exchangeFirebaseToken(idToken);
+    await saveAccessClaims(exchangePayload?.result?.accessToken);
     await saveUser(result.user);
     setStatus("", null);
     setAuthState(result.user);
@@ -237,7 +260,8 @@ onAuthStateChanged(auth, async (user) => {
   await saveUser(user);
   const idToken = await user.getIdToken();
   try {
-    await exchangeFirebaseToken(idToken);
+    const exchangePayload = await exchangeFirebaseToken(idToken);
+    await saveAccessClaims(exchangePayload?.result?.accessToken);
     setStatus("", null);
   } catch (error) {
     console.error("Firebase token exchange error:", error);
