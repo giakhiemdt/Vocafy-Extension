@@ -36,7 +36,7 @@ const getPreferredTheme = () =>
 
 const updateThemeToggleLabel = (theme) => {
   if (!themeToggle) return;
-  themeToggle.textContent = theme === "dark" ? "Sáng" : "Tối";
+  themeToggle.textContent = theme === "dark" ? "🌙" : "☀";
 };
 
 const applyTheme = async (theme, persist = true) => {
