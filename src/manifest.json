@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Vocafy Extension",
+  "version": "0.1.0",
+  "description": "Dev-mode Chrome extension scaffold.",
+  "action": {
+    "default_title": "Vocafy",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["storage", "identity"],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxPsfWPYsJ9kjHRjyXmfokj78KyJdjJYFGVK2zJCu/m7/XrmenWyvzzQSNVdkd0F8iCCZXWeCxzXHFKzc2cJ78BWsQtHQr2iWQ4cujHMfkkv//GDZKCuGI9HwkzVonnBcuIcCBYcXRLckj0P2gBPfgKULNlN4mUhBYZ9hmNL171909Z/wl+B3g4OaT++ibvSWv/LDFegD5jBQ4BK/mrP3aO1KY3WOZuGuJO85WhYzUyQ2rW3LrMXXKO4p0s2sIkINrl2v00h9FXNWSqHz4r6Pwr/zkQ4mv7w60+rFGJfPA2aGzSqNTItKNVZp7ErO/Fx1cOuLJD3qosD2BYTkXtCDfwIDAQAB",
+  "oauth2": {
+    "client_id": "__OAUTH_CLIENT_ID__",
+    "scopes": ["openid", "email", "profile"]
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
