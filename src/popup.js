@@ -26,6 +26,7 @@ const statusEl = document.getElementById("status");
 const tokenEl = document.getElementById("token");
 const themeToggle = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
+const marketingEl = document.getElementById("marketing");
 let cachedToken = null;
 
 chrome.storage.local.get(["authToken"]).then((result) => {
@@ -132,6 +133,8 @@ const saveUser = async (user) => {
 const updateAuthUi = (user) => {
   if (!signOutBtn) return;
   signOutBtn.hidden = !user;
+  if (loginBtn) loginBtn.hidden = !!user;
+  if (marketingEl) marketingEl.hidden = !!user;
 };
 
 const getChromeAuthToken = () =>
