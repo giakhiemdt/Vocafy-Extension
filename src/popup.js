@@ -129,6 +129,11 @@ const saveUser = async (user) => {
   });
 };
 
+const updateAuthUi = (user) => {
+  if (!signOutBtn) return;
+  signOutBtn.hidden = !user;
+};
+
 const getChromeAuthToken = () =>
   new Promise((resolve, reject) => {
     chrome.identity.getAuthToken({ interactive: true }, (token) => {
@@ -192,10 +197,12 @@ signOutBtn.addEventListener("click", async () => {
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    setStatus("Chưa đăng nhập.", null);
+    setStatus("", null);
     setToken("");
+    updateAuthUi(null);
     return;
   }
+  updateAuthUi(user);
   await saveUser(user);
   const idToken = await user.getIdToken();
   try {

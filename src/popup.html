@@ -27,6 +27,8 @@
       --toggle-hover: rgba(15, 23, 42, 0.1);
       --sun-icon-color: #f4a000;
       --moon-icon-color: var(--accent);
+      --logout-icon-color: #ef4444;
+      --logout-hover: rgba(239, 68, 68, 0.14);
     }
 
     :root[data-theme="dark"] {
@@ -45,6 +47,7 @@
       --badge-bg: rgba(99, 102, 241, 0.18);
       --badge-border: rgba(99, 102, 241, 0.25);
       --toggle-hover: rgba(255, 255, 255, 0.12);
+      --logout-hover: rgba(239, 68, 68, 0.18);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -64,6 +67,7 @@
         --badge-bg: rgba(99, 102, 241, 0.18);
         --badge-border: rgba(99, 102, 241, 0.25);
         --toggle-hover: rgba(255, 255, 255, 0.12);
+        --logout-hover: rgba(239, 68, 68, 0.18);
       }
     }
 
@@ -148,6 +152,35 @@
       background-color: var(--moon-icon-color);
       -webkit-mask-image: url("icons/MoonIcon.png");
       mask-image: url("icons/MoonIcon.png");
+    }
+
+    .logout-button {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 6px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .logout-button:hover {
+      border-color: rgba(239, 68, 68, 0.45);
+      background: var(--logout-hover);
+    }
+
+    .logout-icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+      background-color: var(--logout-icon-color);
+      -webkit-mask: no-repeat center / contain;
+      mask: no-repeat center / contain;
+      -webkit-mask-image: url("icons/LogoutIcon.png");
+      mask-image: url("icons/LogoutIcon.png");
     }
     .logo-full {
       height: 28px;
@@ -289,14 +322,17 @@
           </div>
 
           <div class="actions">
-            <button class="btn btn-primary" type="button" id="google-login">Bắt đầu miễn phí</button>
-            <button class="btn btn-ghost" type="button" id="sign-out">Đăng xuất</button>
+            <button class="btn btn-primary" type="button" id="google-login">Đăng nhập</button>
           </div>
 
           <div class="status" id="status"></div>
           <div class="status" id="token"></div>
         </div>
-    </div>
+
+        <button class="logout-button" type="button" id="sign-out" aria-label="Đăng xuất" hidden>
+          <span class="logout-icon" aria-hidden="true"></span>
+        </button>
+      </div>
   </div>
   <script type="module" src="popup.js"></script>
 </body>
