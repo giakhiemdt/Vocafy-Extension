@@ -29,6 +29,7 @@
       --moon-icon-color: var(--accent);
       --logout-icon-color: #ef4444;
       --logout-hover: rgba(239, 68, 68, 0.14);
+      --greeting-color: #1f2937;
     }
 
     :root[data-theme="dark"] {
@@ -48,6 +49,7 @@
       --badge-border: rgba(99, 102, 241, 0.25);
       --toggle-hover: rgba(255, 255, 255, 0.12);
       --logout-hover: rgba(239, 68, 68, 0.18);
+      --greeting-color: #e2e8f0;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -68,6 +70,7 @@
         --badge-border: rgba(99, 102, 241, 0.25);
         --toggle-hover: rgba(255, 255, 255, 0.12);
         --logout-hover: rgba(239, 68, 68, 0.18);
+        --greeting-color: #e2e8f0;
       }
     }
 
@@ -182,6 +185,21 @@
       -webkit-mask-image: url("icons/LogoutIcon.png");
       mask-image: url("icons/LogoutIcon.png");
     }
+
+    .greeting {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--greeting-color);
+      text-align: center;
+      margin: 6px 0 16px;
+    }
+
+    body.auth-loading #marketing,
+    body.auth-loading #google-login,
+    body.auth-loading #sign-out,
+    body.auth-loading #greeting {
+      display: none;
+    }
     .logo-full {
       height: 28px;
       width: auto;
@@ -295,7 +313,7 @@
   </style>
 </head>
 
-<body>
+<body class="auth-loading">
   <div class="wrap">
     <div class="card">
       <div class="topbar">
@@ -322,6 +340,8 @@
               </p>
             </div>
           </div>
+
+          <div id="greeting" class="greeting" hidden></div>
 
           <div class="actions">
             <button class="btn btn-primary" type="button" id="google-login">Đăng nhập</button>

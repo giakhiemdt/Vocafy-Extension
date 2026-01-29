@@ -27,11 +27,25 @@ const tokenEl = document.getElementById("token");
 const themeToggle = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
 const marketingEl = document.getElementById("marketing");
+const greetingEl = document.getElementById("greeting");
 let cachedToken = null;
 
 chrome.storage.local.get(["authToken"]).then((result) => {
   cachedToken = result.authToken || null;
 });
+
+const getDisplayName = (user) => user?.displayName || user?.email || "bạn";
+
+const setGreeting = (user) => {
+  if (!greetingEl) return;
+  if (!user) {
+    greetingEl.textContent = "";
+    greetingEl.hidden = true;
+    return;
+  }
+  greetingEl.textContent = `Xin chào, ${getDisplayName(user)}`;
+  greetingEl.hidden = false;
+};
 
 const getPreferredTheme = () =>
   window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -137,6 +151,18 @@ const updateAuthUi = (user) => {
   if (marketingEl) marketingEl.hidden = !!user;
 };
 
+const setAuthState = (user) => {
+  document.body.classList.remove("auth-loading", "auth-in", "auth-out");
+  document.body.classList.add(user ? "auth-in" : "auth-out");
+  updateAuthUi(user);
+  setGreeting(user);
+};
+
+chrome.storage.local.get(["authUser"]).then((result) => {
+  const cachedUser = result.authUser || null;
+  setAuthState(cachedUser);
+});
+
 const getChromeAuthToken = () =>
   new Promise((resolve, reject) => {
     chrome.identity.getAuthToken({ interactive: true }, (token) => {
@@ -167,8 +193,9 @@ loginBtn.addEventListener("click", async () => {
     const result = await signInWithCredential(auth, credential);
     const idToken = await result.user.getIdToken();
     await exchangeFirebaseToken(idToken);
-    setStatus(`Xin chào, ${result.user.displayName || result.user.email}!`, "ok");
     await saveUser(result.user);
+    setStatus("", null);
+    setAuthState(result.user);
   } catch (error) {
     const code = error?.code || "";
     const messageMap = {
@@ -191,6 +218,7 @@ signOutBtn.addEventListener("click", async () => {
     await signOut(auth);
     await clearCachedToken();
     await saveUser(null);
+    setAuthState(null);
     setStatus("Đã đăng xuất.", null);
   } catch (error) {
     setStatus("Không thể đăng xuất. Vui lòng thử lại.", "error");
@@ -202,15 +230,15 @@ onAuthStateChanged(auth, async (user) => {
   if (!user) {
     setStatus("", null);
     setToken("");
-    updateAuthUi(null);
+    setAuthState(null);
     return;
   }
-  updateAuthUi(user);
+  setAuthState(user);
   await saveUser(user);
   const idToken = await user.getIdToken();
   try {
     await exchangeFirebaseToken(idToken);
-    setStatus(`Xin chào, ${user.displayName || user.email}!`, "ok");
+    setStatus("", null);
   } catch (error) {
     console.error("Firebase token exchange error:", error);
     setStatus("Không thể xác thực với server.", "error");
