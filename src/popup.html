@@ -92,7 +92,7 @@
       .topbar {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
         gap: 8px;
         margin-bottom: 10px;
       }
@@ -115,10 +115,9 @@
       }
 
       .logo-top {
-        border: 1px solid var(--border);
-        background: var(--panel);
-        padding: 6px 10px;
-        border-radius: 12px;
+        border: 0;
+        background: transparent;
+        padding: 0;
       }
 
       .subtitle {
@@ -216,10 +215,10 @@
     <div class="wrap">
       <div class="card">
         <div class="topbar">
-          <button class="theme-toggle" type="button" id="theme-toggle">Tối</button>
           <div class="logo-top">
             <img class="logo-full" src="icons/logoFull.png" alt="Vocafy" />
           </div>
+          <button class="theme-toggle" type="button" id="theme-toggle">Tối</button>
         </div>
 
         <p class="subtitle">Đăng nhập để đồng bộ từ vựng</p>
