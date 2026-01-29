@@ -25,8 +25,25 @@
         --badge-border: rgba(79, 70, 229, 0.2);
       }
 
+      :root[data-theme="dark"] {
+        --bg: #0c1221;
+        --panel: #0f172a;
+        --panel-2: #0b1324;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --accent: #7c83ff;
+        --accent-2: #5a6bff;
+        --accent-3: #22c55e;
+        --danger: #f87171;
+        --ring: rgba(99, 102, 241, 0.35);
+        --border: rgba(148, 163, 184, 0.2);
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        --badge-bg: rgba(99, 102, 241, 0.18);
+        --badge-border: rgba(99, 102, 241, 0.25);
+      }
+
       @media (prefers-color-scheme: dark) {
-        :root {
+        :root:not([data-theme]) {
           --bg: #0c1221;
           --panel: #0f172a;
           --panel-2: #0b1324;
@@ -58,6 +75,7 @@
       }
 
       .wrap {
+        position: relative;
         padding: 16px;
       }
 
@@ -66,9 +84,23 @@
         overflow: hidden;
         background: linear-gradient(180deg, var(--panel), var(--panel-2));
         border: 1px solid var(--border);
-        border-radius: 20px;
+        border-radius: 0;
         padding: 18px 18px 16px;
         box-shadow: var(--shadow);
+      }
+
+      .theme-toggle {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: var(--text);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 6px 10px;
+        border-radius: 999px;
+        cursor: pointer;
       }
 
       .brand {
@@ -187,6 +219,7 @@
   </head>
   <body>
     <div class="wrap">
+      <button class="theme-toggle" type="button" id="theme-toggle">Tối</button>
       <div class="card">
         <div class="brand">
           <div class="logo">V</div>

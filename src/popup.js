@@ -24,11 +24,42 @@ const loginBtn = document.getElementById("google-login");
 const signOutBtn = document.getElementById("sign-out");
 const statusEl = document.getElementById("status");
 const tokenEl = document.getElementById("token");
+const themeToggle = document.getElementById("theme-toggle");
 let cachedToken = null;
 
 chrome.storage.local.get(["authToken"]).then((result) => {
   cachedToken = result.authToken || null;
 });
+
+const getPreferredTheme = () =>
+  window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+const updateThemeToggleLabel = (theme) => {
+  if (!themeToggle) return;
+  themeToggle.textContent = theme === "dark" ? "Sáng" : "Tối";
+};
+
+const applyTheme = async (theme, persist = true) => {
+  document.documentElement.setAttribute("data-theme", theme);
+  updateThemeToggleLabel(theme);
+  if (persist) {
+    await chrome.storage.local.set({ theme });
+  }
+};
+
+chrome.storage.local.get(["theme"]).then((result) => {
+  const theme = result.theme || getPreferredTheme();
+  applyTheme(theme, false);
+});
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", async () => {
+    const current =
+      document.documentElement.getAttribute("data-theme") || getPreferredTheme();
+    const next = current === "dark" ? "light" : "dark";
+    await applyTheme(next, true);
+  });
+}
 
 const setStatus = (message, type) => {
   statusEl.textContent = message;
