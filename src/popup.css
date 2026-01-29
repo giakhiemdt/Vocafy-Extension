@@ -1,0 +1,305 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+:root {
+  color-scheme: light dark;
+  --bg: #eef3fb;
+  --panel: #ffffff;
+  --panel-2: #f4f7ff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #4f46e5;
+  --accent-2: #6366f1;
+  --accent-3: #10b981;
+  --danger: #ef4444;
+  --ring: rgba(79, 70, 229, 0.25);
+  --border: rgba(15, 23, 42, 0.12);
+  --shadow: 0 20px 45px rgba(30, 41, 59, 0.12);
+  --badge-bg: rgba(79, 70, 229, 0.12);
+  --badge-border: rgba(79, 70, 229, 0.2);
+  --toggle-hover: rgba(15, 23, 42, 0.1);
+  --sun-icon-color: #f4a000;
+  --moon-icon-color: var(--accent);
+  --logout-icon-color: #ef4444;
+  --logout-hover: rgba(239, 68, 68, 0.14);
+  --greeting-color: #1f2937;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c1221;
+  --panel: #0f172a;
+  --panel-2: #0b1324;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --accent: #7c83ff;
+  --accent-2: #5a6bff;
+  --accent-3: #22c55e;
+  --danger: #f87171;
+  --ring: rgba(99, 102, 241, 0.35);
+  --border: rgba(148, 163, 184, 0.2);
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  --badge-bg: rgba(99, 102, 241, 0.18);
+  --badge-border: rgba(99, 102, 241, 0.25);
+  --toggle-hover: rgba(255, 255, 255, 0.12);
+  --logout-hover: rgba(239, 68, 68, 0.18);
+  --greeting-color: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0c1221;
+    --panel: #0f172a;
+    --panel-2: #0b1324;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #7c83ff;
+    --accent-2: #5a6bff;
+    --accent-3: #22c55e;
+    --danger: #f87171;
+    --ring: rgba(99, 102, 241, 0.35);
+    --border: rgba(148, 163, 184, 0.2);
+    --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    --badge-bg: rgba(99, 102, 241, 0.18);
+    --badge-border: rgba(99, 102, 241, 0.25);
+    --toggle-hover: rgba(255, 255, 255, 0.12);
+    --logout-hover: rgba(239, 68, 68, 0.18);
+    --greeting-color: #e2e8f0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 340px;
+  font-family: "Space Grotesk", "Plus Jakarta Sans", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(120% 120% at 90% 10%, rgba(99, 102, 241, 0.2) 0%, transparent 55%),
+    radial-gradient(120% 120% at 10% 90%, rgba(16, 185, 129, 0.16) 0%, transparent 55%),
+    var(--bg);
+}
+
+.wrap {
+  position: relative;
+  padding: 10px 10px 12px;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 18px 18px 16px;
+  box-shadow: none;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: -4px -4px 12px;
+}
+
+.theme-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.theme-toggle:hover {
+  background: var(--toggle-hover);
+}
+
+.theme-toggle img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-color: var(--sun-icon-color);
+  -webkit-mask: no-repeat center / contain;
+  mask: no-repeat center / contain;
+}
+
+.theme-icon.sun {
+  background-color: var(--sun-icon-color);
+  -webkit-mask-image: url("icons/SunIcon.png");
+  mask-image: url("icons/SunIcon.png");
+}
+
+.theme-icon.moon {
+  background-color: var(--moon-icon-color);
+  -webkit-mask-image: url("icons/MoonIcon.png");
+  mask-image: url("icons/MoonIcon.png");
+}
+
+.logout-button {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 6px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.logout-button:hover {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: var(--logout-hover);
+}
+
+.logout-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  background-color: var(--logout-icon-color);
+  -webkit-mask: no-repeat center / contain;
+  mask: no-repeat center / contain;
+  -webkit-mask-image: url("icons/LogoutIcon.png");
+  mask-image: url("icons/LogoutIcon.png");
+}
+
+.greeting {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--greeting-color);
+  text-align: center;
+  margin: 6px 0 16px;
+}
+
+body.auth-loading #marketing,
+body.auth-loading #google-login,
+body.auth-loading #sign-out,
+body.auth-loading #greeting {
+  display: none;
+}
+.logo-full {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.logo-top {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+  .subtitle {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .content {
+    margin-top: 28px;
+  }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  margin: 4px 0 10px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.hero-title {
+  font-size: 20px;
+  line-height: 1.25;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.hero-title .accent {
+  color: var(--accent);
+}
+
+.hero-title .accent-2 {
+  color: var(--accent-3);
+}
+
+.hero-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.actions {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0b1120;
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary::after {
+  content: "→";
+  margin-left: 8px;
+  font-weight: 700;
+}
+
+.btn-ghost {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text);
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  min-height: 16px;
+  text-align: center;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.status.ok {
+  color: #86efac;
+}
+  
