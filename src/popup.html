@@ -1,31 +1,50 @@
 ﻿<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vocafy Login</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
-      :root {
-        color-scheme: light dark;
-        --bg: #eef3fb;
-        --panel: #ffffff;
-        --panel-2: #f4f7ff;
-        --text: #0f172a;
-        --muted: #64748b;
-        --accent: #4f46e5;
-        --accent-2: #6366f1;
-        --accent-3: #10b981;
-        --danger: #ef4444;
-        --ring: rgba(79, 70, 229, 0.25);
-        --border: rgba(15, 23, 42, 0.12);
-        --shadow: 0 20px 45px rgba(30, 41, 59, 0.12);
-        --badge-bg: rgba(79, 70, 229, 0.12);
-        --badge-border: rgba(79, 70, 229, 0.2);
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vocafy Login</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
-      :root[data-theme="dark"] {
+    :root {
+      color-scheme: light dark;
+      --bg: #eef3fb;
+      --panel: #ffffff;
+      --panel-2: #f4f7ff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #4f46e5;
+      --accent-2: #6366f1;
+      --accent-3: #10b981;
+      --danger: #ef4444;
+      --ring: rgba(79, 70, 229, 0.25);
+      --border: rgba(15, 23, 42, 0.12);
+      --shadow: 0 20px 45px rgba(30, 41, 59, 0.12);
+      --badge-bg: rgba(79, 70, 229, 0.12);
+      --badge-border: rgba(79, 70, 229, 0.2);
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0c1221;
+      --panel: #0f172a;
+      --panel-2: #0b1324;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #7c83ff;
+      --accent-2: #5a6bff;
+      --accent-3: #22c55e;
+      --danger: #f87171;
+      --ring: rgba(99, 102, 241, 0.35);
+      --border: rgba(148, 163, 184, 0.2);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      --badge-bg: rgba(99, 102, 241, 0.18);
+      --badge-border: rgba(99, 102, 241, 0.25);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
         --bg: #0c1221;
         --panel: #0f172a;
         --panel-2: #0b1324;
@@ -41,84 +60,69 @@
         --badge-bg: rgba(99, 102, 241, 0.18);
         --badge-border: rgba(99, 102, 241, 0.25);
       }
+    }
 
-      @media (prefers-color-scheme: dark) {
-        :root:not([data-theme]) {
-          --bg: #0c1221;
-          --panel: #0f172a;
-          --panel-2: #0b1324;
-          --text: #f8fafc;
-          --muted: #94a3b8;
-          --accent: #7c83ff;
-          --accent-2: #5a6bff;
-          --accent-3: #22c55e;
-          --danger: #f87171;
-          --ring: rgba(99, 102, 241, 0.35);
-          --border: rgba(148, 163, 184, 0.2);
-          --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-          --badge-bg: rgba(99, 102, 241, 0.18);
-          --badge-border: rgba(99, 102, 241, 0.25);
-        }
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        min-width: 340px;
-        font-family: "Space Grotesk", "Plus Jakarta Sans", system-ui, -apple-system,
-          "Segoe UI", sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(120% 120% at 90% 10%, rgba(99, 102, 241, 0.2) 0%, transparent 55%),
-          radial-gradient(120% 120% at 10% 90%, rgba(16, 185, 129, 0.16) 0%, transparent 55%),
-          var(--bg);
-      }
+    body {
+      margin: 0;
+      min-width: 340px;
+      font-family: "Space Grotesk", "Plus Jakarta Sans", system-ui, -apple-system,
+        "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(120% 120% at 90% 10%, rgba(99, 102, 241, 0.2) 0%, transparent 55%),
+        radial-gradient(120% 120% at 10% 90%, rgba(16, 185, 129, 0.16) 0%, transparent 55%),
+        var(--bg);
+    }
 
-      .wrap {
-        position: relative;
-        padding: 14px 14px 16px;
-      }
+    .wrap {
+      position: relative;
+      padding: 10px 10px 12px;
+    }
 
-      .card {
-        position: relative;
-        overflow: hidden;
-        background: transparent;
-        border: 0;
-        border-radius: 0;
-        padding: 18px 18px 16px;
-        box-shadow: none;
-      }
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      padding: 18px 18px 16px;
+      box-shadow: none;
+    }
 
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin: -4px -4px 12px;
-      }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: -4px -4px 12px;
+    }
 
-      .theme-toggle {
-        border: 1px solid var(--border);
-        background: var(--panel);
-        color: var(--text);
-        font-size: 11px;
-        font-weight: 600;
-        padding: 6px 10px;
-        border-radius: 999px;
-        cursor: pointer;
-      }
+    .theme-toggle {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
 
-      .logo-full {
-        height: 28px;
-        width: auto;
-        display: block;
-      }
+    .logo-full {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
 
-      .logo-top {
-        border: 0;
-        background: transparent;
-        padding: 0;
-      }
+    .logo-top {
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
 
       .subtitle {
         margin: 0 0 12px;
@@ -127,122 +131,135 @@
         text-align: center;
       }
 
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--accent);
-        background: var(--badge-bg);
-        border: 1px solid var(--badge-border);
-        margin: 4px 0 10px;
+      .content {
+        margin-top: 14px;
       }
 
-      .hero {
-        text-align: center;
-        margin-bottom: 14px;
-      }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      margin: 4px 0 10px;
+    }
 
-      .hero-title {
-        font-size: 20px;
-        line-height: 1.25;
-        margin: 0 0 8px;
-        letter-spacing: -0.01em;
-      }
+    .hero {
+      text-align: center;
+      margin-bottom: 14px;
+    }
 
-      .hero-title .accent {
-        color: var(--accent);
-      }
+    .hero-title {
+      font-size: 20px;
+      line-height: 1.25;
+      margin: 0 0 8px;
+      letter-spacing: -0.01em;
+    }
 
-      .hero-title .accent-2 {
-        color: var(--accent-3);
-      }
+    .hero-title .accent {
+      color: var(--accent);
+    }
 
-      .hero-desc {
-        margin: 0;
-        color: var(--muted);
-        font-size: 12px;
-        line-height: 1.5;
-      }
+    .hero-title .accent-2 {
+      color: var(--accent-3);
+    }
 
-      .actions {
-        margin-top: 10px;
-        display: grid;
-        gap: 8px;
-      }
+    .hero-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
 
-      .btn {
-        border: 0;
-        border-radius: 999px;
-        padding: 11px 14px;
-        font-weight: 600;
-        cursor: pointer;
-      }
+    .actions {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+    }
 
-      .btn-primary {
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        color: #0b1120;
-        box-shadow: 0 12px 24px rgba(79, 70, 229, 0.2);
-      }
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
 
-      .btn-primary::after {
-        content: "→";
-        margin-left: 8px;
-        font-weight: 700;
-      }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b1120;
+      box-shadow: 0 12px 24px rgba(79, 70, 229, 0.2);
+    }
 
-      .btn-ghost {
-        background: rgba(148, 163, 184, 0.12);
-        color: var(--text);
-      }
+    .btn-primary::after {
+      content: "→";
+      margin-left: 8px;
+      font-weight: 700;
+    }
 
-      .status {
-        margin-top: 10px;
-        font-size: 12px;
-        color: var(--muted);
-        min-height: 16px;
-        text-align: center;
-      }
+    .btn-ghost {
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text);
+    }
 
-      .status.error { color: var(--danger); }
-      .status.ok { color: #86efac; }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <div class="card">
-        <div class="topbar">
-          <div class="logo-top">
-            <img class="logo-full" src="icons/logoFull.png" alt="Vocafy" />
-          </div>
-          <button class="theme-toggle" type="button" id="theme-toggle">Tối</button>
+    .status {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      min-height: 16px;
+      text-align: center;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .status.ok {
+      color: #86efac;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div class="logo-top">
+          <img class="logo-full" src="icons/logoFull.png" alt="Vocafy" />
         </div>
-
-        <p class="subtitle">Đăng nhập để đồng bộ từ vựng</p>
-
-        <div class="hero">
-          <div class="badge">AI-Powered Vocabulary Learning</div>
-          <h2 class="hero-title">
-            Học từ vựng <span class="accent">trực quan</span> và
-            <span class="accent-2">đơn giản</span>
-          </h2>
-          <p class="hero-desc">
-            Trải nghiệm học nhanh với gợi ý thông minh và đồng bộ dữ liệu mọi lúc.
-          </p>
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-primary" type="button" id="google-login">Bắt đầu miễn phí</button>
-          <button class="btn btn-ghost" type="button" id="sign-out">Đăng xuất</button>
-        </div>
-
-        <div class="status" id="status"></div>
-        <div class="status" id="token"></div>
+        <button class="theme-toggle" type="button" id="theme-toggle">Tối</button>
       </div>
+
+        <div class="content">
+          <p class="subtitle">Đăng nhập để đồng bộ từ vựng</p>
+
+          <div class="hero">
+            <div class="badge">AI-Powered Vocabulary Learning</div>
+            <h2 class="hero-title">
+              Học từ vựng <span class="accent">trực quan</span> và
+              <span class="accent-2">đơn giản</span>
+            </h2>
+            <p class="hero-desc">
+              Trải nghiệm học nhanh với gợi ý thông minh và đồng bộ dữ liệu mọi lúc.
+            </p>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="button" id="google-login">Bắt đầu miễn phí</button>
+            <button class="btn btn-ghost" type="button" id="sign-out">Đăng xuất</button>
+          </div>
+
+          <div class="status" id="status"></div>
+          <div class="status" id="token"></div>
+        </div>
     </div>
-    <script type="module" src="popup.js"></script>
-  </body>
+  </div>
+  <script type="module" src="popup.js"></script>
+</body>
+
 </html>
