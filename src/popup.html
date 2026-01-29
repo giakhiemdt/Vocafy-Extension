@@ -25,6 +25,8 @@
       --badge-bg: rgba(79, 70, 229, 0.12);
       --badge-border: rgba(79, 70, 229, 0.2);
       --toggle-hover: rgba(15, 23, 42, 0.1);
+      --sun-icon-color: #f59e0b;
+      --moon-icon-color: var(--accent);
     }
 
     :root[data-theme="dark"] {
@@ -125,6 +127,27 @@
       width: 18px;
       height: 18px;
       display: block;
+    }
+
+    .theme-icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+      background-color: var(--sun-icon-color);
+      -webkit-mask: no-repeat center / contain;
+      mask: no-repeat center / contain;
+    }
+
+    .theme-icon.sun {
+      background-color: var(--sun-icon-color);
+      -webkit-mask-image: url("icons/SunIcon.png");
+      mask-image: url("icons/SunIcon.png");
+    }
+
+    .theme-icon.moon {
+      background-color: var(--moon-icon-color);
+      -webkit-mask-image: url("icons/MoonIcon.png");
+      mask-image: url("icons/MoonIcon.png");
     }
     .logo-full {
       height: 28px;
@@ -247,7 +270,7 @@
           <img class="logo-full" src="icons/logoFull.png" alt="Vocafy" />
         </div>
           <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Đổi giao diện">
-            <img id="theme-icon" src="icons/SunIcon.png" alt="Sáng" />
+            <span id="theme-icon" class="theme-icon sun" aria-hidden="true"></span>
           </button>
       </div>
 

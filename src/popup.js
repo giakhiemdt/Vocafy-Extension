@@ -38,8 +38,11 @@ const getPreferredTheme = () =>
 const updateThemeToggleLabel = (theme) => {
   if (!themeToggle) return;
   if (!themeIcon) return;
-  themeIcon.src = theme === "dark" ? "icons/MoonIcon.png" : "icons/SunIcon.png";
-  themeIcon.alt = theme === "dark" ? "Tối" : "Sáng";
+  themeIcon.className = `theme-icon ${theme === "dark" ? "moon" : "sun"}`;
+  themeToggle.setAttribute(
+    "aria-label",
+    theme === "dark" ? "Chuyển sang sáng" : "Chuyển sang tối"
+  );
 };
 
 const applyTheme = async (theme, persist = true) => {
