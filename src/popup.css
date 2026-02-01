@@ -153,6 +153,7 @@ body {
   border-radius: 16px;
   padding: 12px;
   box-shadow: var(--shadow);
+  min-height: 240px;
 }
 
 .section.no-card {
