@@ -155,6 +155,14 @@ body {
   box-shadow: var(--shadow);
 }
 
+.section.no-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
 :root[data-theme="dark"] .section {
   background: rgba(15, 23, 42, 0.9);
 }
@@ -170,6 +178,13 @@ body {
   text-align: center;
   align-items: center;
   justify-items: center;
+}
+
+.marketing.no-card {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .subtitle {

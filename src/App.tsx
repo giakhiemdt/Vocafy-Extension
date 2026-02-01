@@ -139,17 +139,13 @@ export const App: React.FC = () => {
         showLogout={isLoggedIn}
       />
 
-      <section className="section quick-action">
-        {isLoggedIn ? (
+      {isLoggedIn && (
+        <section className="section quick-action">
           <QuickAddButton onClick={handleQuickAdd} disabled={loading} />
-        ) : (
-          <button className="primary-btn" type="button" onClick={handleQuickAdd} disabled={loading}>
-            Bắt đầu miễn phí →
-          </button>
-        )}
-      </section>
+        </section>
+      )}
 
-      <section className="section">
+      <section className={`section ${!isLoggedIn ? "no-card" : ""}`}>
         {!isLoggedIn ? (
           <div className="marketing">
             <div className="subtitle">Đăng nhập để đồng bộ từ vựng</div>
