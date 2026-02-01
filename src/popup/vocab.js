@@ -72,17 +72,24 @@ export const initVocabForm = ({
     toggleBtn.hidden = true;
   });
 
+  const handleClose = (event) => {
+    event.preventDefault();
+    if (listEl && emptyEl) {
+      emptyEl.hidden = listEl.children.length > 0;
+    }
+    formEl.setAttribute("hidden", "true");
+    if (listEl) listEl.hidden = false;
+    toggleBtn.hidden = false;
+  };
+
   if (closeBtn) {
-    closeBtn.addEventListener("click", (event) => {
-      event.preventDefault();
-      if (listEl && emptyEl) {
-        emptyEl.hidden = listEl.children.length > 0;
-      }
-      formEl.setAttribute("hidden", "true");
-      if (listEl) listEl.hidden = false;
-      toggleBtn.hidden = false;
-    });
+    closeBtn.addEventListener("click", handleClose);
   }
+
+  formEl.addEventListener("click", (event) => {
+    const target = event.target.closest("#close-vocab-form");
+    if (target) handleClose(event);
+  });
 
   formEl.addEventListener("submit", async (event) => {
     event.preventDefault();
