@@ -51,3 +51,31 @@ export const fetchMyVocabularies = async (accessToken, page = 0, size = 10) => {
 
   return response.json();
 };
+
+export const createQuickVocabulary = async (accessToken, payload) => {
+  if (!accessToken) {
+    throw new Error("Missing access token.");
+  }
+  const response = await fetch("https://vocafy.milize-lena.space/api/vocabularies/quick", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (response.status === 401) {
+    const errorText = await response.text();
+    const error = new Error(`Quick vocab unauthorized: ${errorText}`);
+    error.code = "INVALID_TOKEN";
+    throw error;
+  }
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Quick vocab failed: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
+};

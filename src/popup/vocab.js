@@ -1,5 +1,10 @@
-import { fetchMyVocabularies } from "./api.js";
-import { loadAccessToken, loadVocabularies, saveVocabDraft, saveVocabularies } from "./storage.js";
+import { createQuickVocabulary, fetchMyVocabularies } from "./api.js";
+import {
+  loadAccessToken,
+  loadVocabularies,
+  saveVocabDraft,
+  saveVocabularies,
+} from "./storage.js";
 
 const requiredMessage = "Vui lòng nhập đầy đủ các trường bắt buộc.";
 
@@ -121,14 +126,20 @@ export const initVocabForm = ({
 
     const payload = buildPayload(values);
     await saveVocabDraft(payload);
-    status.setStatus("Đã lưu dữ liệu từ vựng để gửi.", "ok");
 
     try {
       const accessToken = await loadAccessToken();
+      await createQuickVocabulary(accessToken, payload);
       const vocabPayload = await fetchMyVocabularies(accessToken, 0, 10);
       await saveVocabularies(vocabPayload);
+      status.setStatus("Đã lưu từ vựng.", "ok");
     } catch (error) {
-      console.error("Refresh vocabularies failed:", error);
+      if (error?.code === "INVALID_TOKEN") {
+        status.setStatus("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.", "error");
+      } else {
+        status.setStatus("Lưu từ vựng thất bại. Vui lòng thử lại.", "error");
+        console.error("Save vocab failed:", error);
+      }
     }
   });
 };
