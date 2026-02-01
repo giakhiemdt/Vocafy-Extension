@@ -37,6 +37,13 @@ export const fetchMyVocabularies = async (accessToken, page = 0, size = 10) => {
     }
   );
 
+  if (response.status === 401) {
+    const errorText = await response.text();
+    const error = new Error(`Vocab API unauthorized: ${errorText}`);
+    error.code = "INVALID_TOKEN";
+    throw error;
+  }
+
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Vocab API failed: ${response.status} ${errorText}`);

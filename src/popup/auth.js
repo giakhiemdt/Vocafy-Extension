@@ -54,8 +54,21 @@ export const initAuth = async ({ auth, ui, loginBtn, signOutBtn }) => {
 
   const syncVocabularies = async (accessToken) => {
     if (!accessToken) return;
-    const vocabPayload = await fetchMyVocabularies(accessToken, 0, 10);
-    await saveVocabularies(vocabPayload);
+    try {
+      const vocabPayload = await fetchMyVocabularies(accessToken, 0, 10);
+      await saveVocabularies(vocabPayload);
+    } catch (error) {
+      if (error?.code === "INVALID_TOKEN") {
+        await signOut(auth);
+        await clearCachedToken();
+        await clearAuthStorage();
+        ui.setToken("");
+        ui.setAuthState(null);
+        ui.setStatus("Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.", "error");
+      } else {
+        console.error("Fetch vocabularies failed:", error);
+      }
+    }
   };
 
   const cachedUser = await loadAuthUser();
