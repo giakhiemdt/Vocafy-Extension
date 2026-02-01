@@ -15,6 +15,7 @@
   --sun-color: #f4a000;
   --moon-color: #ffffff;
   --logout-color: #ef4444;
+  min-height: 416px;
 }
 
 :root[data-theme="dark"] {
@@ -148,12 +149,7 @@ body {
 }
 
 .section {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid var(--border);
-  border-radius: 16px;
   padding: 12px;
-  box-shadow: var(--shadow);
-  min-height: 360px;
 }
 
 .section.no-card {
@@ -180,7 +176,7 @@ body {
   text-align: center;
   align-items: center;
   justify-content: center;
-  padding: 40px 16px 20px;
+  padding: 20px 16px 20px;
 }
 
 .marketing.no-card {
@@ -339,7 +335,8 @@ body {
 }
 
 .field input,
-.field textarea {
+.field textarea,
+.field select {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -351,7 +348,8 @@ body {
 }
 
 .field input:focus,
-.field textarea:focus {
+.field textarea:focus,
+.field select:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--ring);

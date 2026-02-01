@@ -50,7 +50,7 @@ export const fetchRecentVocabularies = async (accessToken: string, limit = 20) =
 };
 
 export const createQuickVocabulary = async (accessToken: string, payload: unknown) => {
-  const response = await fetch(`${BASE_URL}/vocab/quick`, {
+  const response = await fetch(`${BASE_URL}/vocabularies/quick`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

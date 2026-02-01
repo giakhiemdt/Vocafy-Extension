@@ -91,10 +91,18 @@ export const App: React.FC = () => {
 
   const handleSaveQuick = async (payload: VocabQuickPayload) => {
     if (!accessToken) return;
-    await createQuickVocabulary(accessToken, payload);
-    showToast("Đã lưu");
-    setModalOpen(false);
-    await loadRecent(accessToken, limit);
+    try {
+      const response = await createQuickVocabulary(accessToken, payload);
+      if (response?.success) {
+        showToast("Đã lưu");
+        setModalOpen(false);
+        await loadRecent(accessToken, limit);
+      } else {
+        showToast("Lưu từ vựng thất bại.", "error");
+      }
+    } catch (error) {
+      showToast("Lưu từ vựng thất bại.", "error");
+    }
   };
 
   const handleItemClick = (item: VocabItem) => {
@@ -148,7 +156,6 @@ export const App: React.FC = () => {
       <section className={`section ${!isLoggedIn ? "no-card" : ""}`}>
         {!isLoggedIn ? (
           <div className="marketing">
-            <div className="subtitle">Đăng nhập để đồng bộ từ vựng</div>
             <div className="badge">AI-Powered Vocabulary Learning</div>
             <div className="hero-title">
               Học từ vựng <span className="accent">trực quan</span> và <br />
@@ -157,9 +164,10 @@ export const App: React.FC = () => {
             <div className="hero-desc">
               Trải nghiệm học nhanh với gợi ý thông minh và đồng bộ dữ liệu mọi lúc.
             </div>
-            <button className="primary-btn" type="button" onClick={handleQuickAdd}>
+            <button className="primary-btn" style={{marginTop: "80px"}} type="button" onClick={handleQuickAdd}>
               Bắt đầu miễn phí →
             </button>
+            <div className="subtitle">Đăng nhập để đồng bộ từ vựng</div>
           </div>
         ) : showEmpty ? (
           <div className="empty">
