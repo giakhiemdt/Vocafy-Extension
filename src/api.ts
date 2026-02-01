@@ -27,12 +27,19 @@ export const exchangeFirebaseToken = async (idToken: string) => {
   };
 };
 
-export const fetchRecentVocabularies = async (accessToken: string, limit = 20) => {
-  const response = await fetch(`${BASE_URL}/vocab/recent?limit=${limit}`, {
+export const fetchRecentVocabularies = async (
+  accessToken: string,
+  page = 0,
+  size = 10
+) => {
+  const response = await fetch(
+    `${BASE_URL}/vocabularies/me?page=${page}&size=${size}`,
+    {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  });
+    }
+  );
 
   if (response.status === 401) {
     const errorText = await response.text();

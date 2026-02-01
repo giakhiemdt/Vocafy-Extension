@@ -22,7 +22,8 @@ const mapRecent = (raw: any[]): VocabItem[] =>
 export const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [items, setItems] = useState<VocabItem[]>([]);
-  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [editItem, setEditItem] = useState<VocabItem | null>(null);
   const [toast, setToast] = useState<{ message: string; type?: "error" } | null>(null);
@@ -36,10 +37,10 @@ export const App: React.FC = () => {
   }, []);
 
   const loadRecent = useCallback(
-    async (token: string, newLimit = limit) => {
+    async (token: string, newPage = page, newSize = size) => {
       try {
-        const payload = await fetchRecentVocabularies(token, newLimit);
-        const content = payload?.result?.content || payload?.content || [];
+        const payload = await fetchRecentVocabularies(token, newPage, newSize);
+        const content = payload?.result?.content || [];
         setItems(mapRecent(content));
       } catch (error: any) {
         if (error?.code === "INVALID_TOKEN") {
@@ -50,7 +51,7 @@ export const App: React.FC = () => {
         }
       }
     },
-    [limit, showToast]
+    [page, size, showToast]
   );
 
   useEffect(() => {
@@ -64,12 +65,12 @@ export const App: React.FC = () => {
       const cached = await loadAccessToken();
       if (cached) {
         setAccessToken(cached);
-        await loadRecent(cached, limit);
+        await loadRecent(cached, page, size);
       }
       setLoading(false);
     };
     void init();
-  }, [limit, loadRecent]);
+  }, [page, size, loadRecent]);
 
   const handleToggleTheme = async () => {
     const next = theme === "dark" ? "light" : "dark";
@@ -82,7 +83,7 @@ export const App: React.FC = () => {
     try {
       const token = await ensureAccessToken();
       setAccessToken(token);
-      await loadRecent(token, limit);
+      await loadRecent(token, page, size);
       setModalOpen(true);
     } catch (error) {
       showToast("Không thể đăng nhập.", "error");
@@ -96,7 +97,7 @@ export const App: React.FC = () => {
       if (response?.success) {
         showToast("Đã lưu");
         setModalOpen(false);
-        await loadRecent(accessToken, limit);
+        await loadRecent(accessToken, page, size);
       } else {
         showToast("Lưu từ vựng thất bại.", "error");
       }
@@ -121,13 +122,13 @@ export const App: React.FC = () => {
 
   const handleLoadMore = async () => {
     if (!accessToken) return;
-    const nextLimit = limit + 20;
-    setLimit(nextLimit);
-    await loadRecent(accessToken, nextLimit);
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await loadRecent(accessToken, nextPage, size);
   };
 
   const showEmpty = !loading && items.length === 0;
-  const showLoadMore = items.length >= limit && !!accessToken;
+  const showLoadMore = items.length >= size && !!accessToken;
 
   const handleLogout = async () => {
     await forceLogout();
