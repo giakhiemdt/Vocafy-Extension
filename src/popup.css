@@ -179,7 +179,12 @@ body {
   text-align: center;
   align-items: center;
   justify-items: center;
-  padding: 14px 8px;
+  padding: 28px 16px;
+}
+
+.marketing--stretch {
+  height: 100%;
+  align-content: space-between;
 }
 
 .marketing.no-card {

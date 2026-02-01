@@ -147,7 +147,7 @@ export const App: React.FC = () => {
 
       <section className={`section ${!isLoggedIn ? "no-card" : ""}`}>
         {!isLoggedIn ? (
-          <div className="marketing">
+          <div className="marketing marketing--stretch">
             <div className="subtitle">Đăng nhập để đồng bộ từ vựng</div>
             <div className="badge">AI-Powered Vocabulary Learning</div>
             <div className="hero-title">
