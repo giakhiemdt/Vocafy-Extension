@@ -192,6 +192,10 @@ body.auth-loading #sign-out,
 body.auth-loading #greeting {
   display: none;
 }
+
+body.auth-out #sign-out {
+  display: none;
+}
 .logo-full {
   height: 28px;
   width: auto;
