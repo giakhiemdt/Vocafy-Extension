@@ -23,7 +23,7 @@ export const App: React.FC = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [items, setItems] = useState<VocabItem[]>([]);
   const [page, setPage] = useState(0);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(4);
   const [modalOpen, setModalOpen] = useState(false);
   const [editItem, setEditItem] = useState<VocabItem | null>(null);
   const [toast, setToast] = useState<{ message: string; type?: "error" } | null>(null);
