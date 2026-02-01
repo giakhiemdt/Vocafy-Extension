@@ -67,6 +67,7 @@ export const initVocabForm = ({
 
   toggleBtn.addEventListener("click", () => {
     formEl.removeAttribute("hidden");
+    formEl.style.display = "";
     if (listEl) listEl.hidden = true;
     if (emptyEl) emptyEl.hidden = true;
     toggleBtn.hidden = true;
@@ -78,6 +79,7 @@ export const initVocabForm = ({
       emptyEl.hidden = listEl.children.length > 0;
     }
     formEl.setAttribute("hidden", "true");
+    formEl.style.display = "none";
     if (listEl) listEl.hidden = false;
     toggleBtn.hidden = false;
   };

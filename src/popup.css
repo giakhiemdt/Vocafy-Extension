@@ -317,6 +317,10 @@ body.auth-loading #vocab-section {
   gap: 10px;
 }
 
+.vocab-form[hidden] {
+  display: none !important;
+}
+
 .form-grid {
   display: grid;
   gap: 8px;
