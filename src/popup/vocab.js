@@ -73,10 +73,13 @@ export const initVocabForm = ({
   });
 
   if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
+    closeBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (listEl && emptyEl) {
+        emptyEl.hidden = listEl.children.length > 0;
+      }
       formEl.setAttribute("hidden", "true");
       if (listEl) listEl.hidden = false;
-      if (emptyEl) emptyEl.hidden = false;
       toggleBtn.hidden = false;
     });
   }
