@@ -144,15 +144,26 @@ export const App: React.FC = () => {
           <QuickAddButton onClick={handleQuickAdd} disabled={loading} />
         ) : (
           <button className="primary-btn" type="button" onClick={handleQuickAdd} disabled={loading}>
-            Đăng nhập
+            Bắt đầu miễn phí →
           </button>
         )}
       </section>
 
       <section className="section">
         {!isLoggedIn ? (
-          <div className="empty">
-            <div>Đăng nhập để lưu nhanh từ vựng trong lúc làm việc.</div>
+          <div className="marketing">
+            <div className="subtitle">Đăng nhập để đồng bộ từ vựng</div>
+            <div className="badge">AI-Powered Vocabulary Learning</div>
+            <div className="hero-title">
+              Học từ vựng <span className="accent">trực quan</span> và{" "}
+              <span className="accent-2">đơn giản</span>
+            </div>
+            <div className="hero-desc">
+              Trải nghiệm học nhanh với gợi ý thông minh và đồng bộ dữ liệu mọi lúc.
+            </div>
+            <button className="primary-btn" type="button" onClick={handleQuickAdd}>
+              Bắt đầu miễn phí →
+            </button>
           </div>
         ) : showEmpty ? (
           <div className="empty">
