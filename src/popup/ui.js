@@ -7,6 +7,7 @@ export const createUI = ({
   tokenEl,
   marketingEl,
   greetingEl,
+  vocabSection,
 }) => {
   const setStatus = (message, type) => {
     if (!statusEl) return;
@@ -35,6 +36,7 @@ export const createUI = ({
     if (signOutBtn) signOutBtn.hidden = !user;
     if (loginBtn) loginBtn.hidden = !!user;
     if (marketingEl) marketingEl.hidden = !!user;
+    if (vocabSection) vocabSection.hidden = !user;
   };
 
   const setAuthState = (user) => {

@@ -38,7 +38,11 @@ export const clearAuthStorage = () =>
     "refreshToken",
     "accessClaims",
     "vocabularies",
+    "vocabDraft",
   ]);
 
 export const saveVocabularies = (payload) =>
   payload ? setLocal({ vocabularies: payload }) : Promise.resolve();
+
+export const saveVocabDraft = (payload) =>
+  payload ? setLocal({ vocabDraft: payload }) : Promise.resolve();

@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth/web-extension";
 import { initAuth } from "./popup/auth.js";
 import { initTheme } from "./popup/theme.js";
 import { createUI } from "./popup/ui.js";
+import { initVocabForm } from "./popup/vocab.js";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -23,6 +24,9 @@ const themeToggle = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
 const marketingEl = document.getElementById("marketing");
 const greetingEl = document.getElementById("greeting");
+const vocabSection = document.getElementById("vocab-section");
+const vocabForm = document.getElementById("vocab-form");
+const vocabToggle = document.getElementById("add-vocab-toggle");
 
 const ui = createUI({
   loginBtn,
@@ -31,7 +35,9 @@ const ui = createUI({
   tokenEl,
   marketingEl,
   greetingEl,
+  vocabSection,
 });
 
 initTheme(themeToggle, themeIcon);
 initAuth({ auth, ui, loginBtn, signOutBtn });
+initVocabForm({ formEl: vocabForm, toggleBtn: vocabToggle, status: ui });
