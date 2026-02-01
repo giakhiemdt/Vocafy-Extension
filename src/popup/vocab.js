@@ -29,8 +29,9 @@ export const initVocabForm = ({ formEl, toggleBtn, status }) => {
   if (!formEl || !toggleBtn) return;
 
   toggleBtn.addEventListener("click", () => {
-    const isHidden = formEl.hasAttribute("hidden");
-    formEl.toggleAttribute("hidden", !isHidden);
+    if (formEl.hasAttribute("hidden")) {
+      formEl.removeAttribute("hidden");
+    }
   });
 
   formEl.addEventListener("submit", async (event) => {
