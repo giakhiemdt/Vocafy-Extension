@@ -309,6 +309,10 @@ body {
   padding: 16px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-header {
@@ -316,6 +320,12 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+}
+
+.modal form {
+  overflow-y: auto;
+  max-height: 65vh;
+  padding-right: 2px;
 }
 
 .modal-title {
