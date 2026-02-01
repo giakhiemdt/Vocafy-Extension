@@ -1,4 +1,4 @@
-import { saveVocabDraft } from "./storage.js";
+import { loadVocabularies, saveVocabDraft } from "./storage.js";
 
 const requiredMessage = "Vui lòng nhập đầy đủ các trường bắt buộc.";
 
@@ -7,11 +7,6 @@ const normalize = (value) => {
   return trimmed.length ? trimmed : null;
 };
 
-const toNumberOrNull = (value) => {
-  if (value.trim() === "") return null;
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : null;
-};
 
 const buildPayload = (values) => ({
   term: values.term,
@@ -22,17 +17,69 @@ const buildPayload = (values) => ({
   example_sentence: values.example_sentence,
   example_translation: values.example_translation,
   note: values.note,
-  sort_order: values.sort_order,
+  sort_order: null,
 });
 
-export const initVocabForm = ({ formEl, toggleBtn, status }) => {
+const renderList = (listEl, emptyEl, payload) => {
+  if (!listEl || !emptyEl) return;
+  const items = payload?.result?.content || [];
+  listEl.innerHTML = "";
+  if (!items.length) {
+    emptyEl.hidden = false;
+    return;
+  }
+  emptyEl.hidden = true;
+  items.forEach((item) => {
+    const term = item.terms?.[0]?.text_value || "—";
+    const meaning = item.meanings?.[0]?.meaning_text || "Chưa có nghĩa";
+    const language = item.terms?.[0]?.language_code || "";
+    const wrapper = document.createElement("div");
+    wrapper.className = "vocab-item";
+    wrapper.innerHTML = `
+      <div class="vocab-term">${term}</div>
+      <div class="vocab-meta">${language} · ${meaning}</div>
+    `;
+    listEl.appendChild(wrapper);
+  });
+};
+
+export const initVocabList = async ({ listEl, emptyEl }) => {
+  if (!listEl || !emptyEl) return;
+  const cached = await loadVocabularies();
+  renderList(listEl, emptyEl, cached);
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "local") return;
+    if (changes.vocabularies) {
+      renderList(listEl, emptyEl, changes.vocabularies.newValue);
+    }
+  });
+};
+
+export const initVocabForm = ({
+  formEl,
+  toggleBtn,
+  closeBtn,
+  listEl,
+  emptyEl,
+  status,
+}) => {
   if (!formEl || !toggleBtn) return;
 
   toggleBtn.addEventListener("click", () => {
-    if (formEl.hasAttribute("hidden")) {
-      formEl.removeAttribute("hidden");
-    }
+    formEl.removeAttribute("hidden");
+    if (listEl) listEl.hidden = true;
+    if (emptyEl) emptyEl.hidden = true;
+    toggleBtn.hidden = true;
   });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      formEl.setAttribute("hidden", "true");
+      if (listEl) listEl.hidden = false;
+      if (emptyEl) emptyEl.hidden = false;
+      toggleBtn.hidden = false;
+    });
+  }
 
   formEl.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -46,7 +93,7 @@ export const initVocabForm = ({ formEl, toggleBtn, status }) => {
       example_sentence: normalize(formEl.example_sentence?.value || ""),
       example_translation: normalize(formEl.example_translation?.value || ""),
       note: normalize(formEl.note?.value || ""),
-      sort_order: toNumberOrNull(formEl.sort_order?.value || ""),
+      sort_order: null,
     };
 
     if (!values.term || !values.language_code || !values.script_type) {

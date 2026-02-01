@@ -6,6 +6,8 @@ export const loadAuthUser = async () => (await getLocal(["authUser"])).authUser 
 export const loadAuthToken = async () => (await getLocal(["authToken"])).authToken || null;
 export const loadAccessToken = async () =>
   (await getLocal(["accessToken"])).accessToken || null;
+export const loadVocabularies = async () =>
+  (await getLocal(["vocabularies"])).vocabularies || null;
 
 export const saveAuthToken = (token) => setLocal({ authToken: token });
 

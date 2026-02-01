@@ -39,9 +39,14 @@
         <div id="greeting" class="greeting" hidden></div>
 
         <div id="vocab-section" class="vocab-section" hidden>
-          <button class="btn btn-ghost" type="button" id="add-vocab-toggle">
-            Thêm từ vựng
-          </button>
+          <div class="vocab-header">
+            <button class="btn btn-ghost" type="button" id="add-vocab-toggle">
+              Thêm từ vựng
+            </button>
+          </div>
+
+          <div id="vocab-list" class="vocab-list"></div>
+          <div id="vocab-empty" class="vocab-empty" hidden>Chưa có từ vựng.</div>
 
           <form id="vocab-form" class="vocab-form" hidden>
             <div class="form-grid">
@@ -109,14 +114,12 @@
                 <label for="note">Ghi chú</label>
                 <input id="note" name="note" type="text" />
               </div>
-
-              <div class="field">
-                <label for="sort_order">Thứ tự</label>
-                <input id="sort_order" name="sort_order" type="number" min="0" step="1" />
-              </div>
             </div>
 
-            <button class="btn btn-primary" type="submit">Lưu từ vựng</button>
+            <div class="form-actions">
+              <button class="btn btn-ghost" type="button" id="close-vocab-form">Đóng</button>
+              <button class="btn btn-primary" type="submit">Lưu từ vựng</button>
+            </div>
           </form>
         </div>
 

@@ -277,6 +277,41 @@ body.auth-loading #vocab-section {
   margin: 8px 0 4px;
 }
 
+.vocab-header {
+  display: flex;
+  justify-content: center;
+}
+
+.vocab-list {
+  display: grid;
+  gap: 8px;
+}
+
+.vocab-item {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  display: grid;
+  gap: 4px;
+}
+
+.vocab-term {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.vocab-meta {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.vocab-empty {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .vocab-form {
   display: grid;
   gap: 10px;
@@ -285,6 +320,12 @@ body.auth-loading #vocab-section {
 .form-grid {
   display: grid;
   gap: 8px;
+}
+
+.form-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .field label {

@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth/web-extension";
 import { initAuth } from "./popup/auth.js";
 import { initTheme } from "./popup/theme.js";
 import { createUI } from "./popup/ui.js";
-import { initVocabForm } from "./popup/vocab.js";
+import { initVocabForm, initVocabList } from "./popup/vocab.js";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -27,6 +27,9 @@ const greetingEl = document.getElementById("greeting");
 const vocabSection = document.getElementById("vocab-section");
 const vocabForm = document.getElementById("vocab-form");
 const vocabToggle = document.getElementById("add-vocab-toggle");
+const vocabList = document.getElementById("vocab-list");
+const vocabEmpty = document.getElementById("vocab-empty");
+const vocabClose = document.getElementById("close-vocab-form");
 
 const ui = createUI({
   loginBtn,
@@ -40,4 +43,12 @@ const ui = createUI({
 
 initTheme(themeToggle, themeIcon);
 initAuth({ auth, ui, loginBtn, signOutBtn });
-initVocabForm({ formEl: vocabForm, toggleBtn: vocabToggle, status: ui });
+initVocabList({ listEl: vocabList, emptyEl: vocabEmpty });
+initVocabForm({
+  formEl: vocabForm,
+  toggleBtn: vocabToggle,
+  closeBtn: vocabClose,
+  listEl: vocabList,
+  emptyEl: vocabEmpty,
+  status: ui,
+});
