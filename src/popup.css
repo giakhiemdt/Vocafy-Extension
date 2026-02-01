@@ -84,7 +84,7 @@ body {
 .icon-button {
   border: 0;
   background: transparent;
-  padding: 8px;
+  padding: 7px;
   border-radius: 999px;
   cursor: pointer;
 }
@@ -94,8 +94,8 @@ body {
 }
 
 .icon-button span {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: block;
 }
 
@@ -109,14 +109,10 @@ body {
 }
 
 .logout-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: block;
-  background-color: #ef4444;
-  -webkit-mask: no-repeat center / contain;
-  mask: no-repeat center / contain;
-  -webkit-mask-image: url(\"icons/LogoutIcon.png\");
-  mask-image: url(\"icons/LogoutIcon.png\");
+  background: url("icons/LogoutIcon.png") center / contain no-repeat;
 }
 
 .section {
