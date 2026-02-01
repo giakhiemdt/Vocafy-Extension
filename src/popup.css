@@ -14,7 +14,7 @@
   --soft: #e5e7eb;
   --sun-color: #f4a000;
   --moon-color: #ffffff;
-  --logout-color: #0f172a;
+  --logout-color: #ef4444;
 }
 
 :root[data-theme="dark"] {
@@ -29,7 +29,7 @@
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
   --danger: #f87171;
   --soft: rgba(148, 163, 184, 0.2);
-  --logout-color: #ffffff;
+  --logout-color: #ef4444;
 }
 
 * {

@@ -28,6 +28,7 @@ export const App: React.FC = () => {
   const [toast, setToast] = useState<{ message: string; type?: "error" } | null>(null);
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const isLoggedIn = useMemo(() => Boolean(accessToken), [accessToken]);
 
   const showToast = useCallback((message: string, type?: "error") => {
     setToast({ message, type });
@@ -81,6 +82,7 @@ export const App: React.FC = () => {
     try {
       const token = await ensureAccessToken();
       setAccessToken(token);
+      await loadRecent(token, limit);
       setModalOpen(true);
     } catch (error) {
       showToast("Không thể đăng nhập.", "error");
@@ -123,19 +125,36 @@ export const App: React.FC = () => {
     await forceLogout();
     setAccessToken(null);
     setItems([]);
+    setModalOpen(false);
+    setEditItem(null);
     showToast("Đã đăng xuất");
   };
 
   return (
     <div className="app">
-      <Header onLogout={handleLogout} theme={theme} onToggleTheme={handleToggleTheme} />
+      <Header
+        onLogout={handleLogout}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
+        showLogout={isLoggedIn}
+      />
 
       <section className="section quick-action">
-        <QuickAddButton onClick={handleQuickAdd} disabled={loading} />
+        {isLoggedIn ? (
+          <QuickAddButton onClick={handleQuickAdd} disabled={loading} />
+        ) : (
+          <button className="primary-btn" type="button" onClick={handleQuickAdd} disabled={loading}>
+            Đăng nhập
+          </button>
+        )}
       </section>
 
       <section className="section">
-        {showEmpty ? (
+        {!isLoggedIn ? (
+          <div className="empty">
+            <div>Đăng nhập để lưu nhanh từ vựng trong lúc làm việc.</div>
+          </div>
+        ) : showEmpty ? (
           <div className="empty">
             <div>Chưa có từ vựng. Hãy lưu nhanh từ mới khi bạn đang làm việc.</div>
           </div>

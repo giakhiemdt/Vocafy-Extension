@@ -4,9 +4,10 @@ type Props = {
   onLogout: () => void;
   theme: "light" | "dark";
   onToggleTheme: () => void;
+  showLogout: boolean;
 };
 
-export const Header: React.FC<Props> = ({ onLogout, theme, onToggleTheme }) => {
+export const Header: React.FC<Props> = ({ onLogout, theme, onToggleTheme, showLogout }) => {
   return (
     <header className="header">
       <div className="brand">
@@ -24,14 +25,16 @@ export const Header: React.FC<Props> = ({ onLogout, theme, onToggleTheme }) => {
             aria-hidden="true"
           ></span>
         </button>
-        <button
-          className="icon-button logout"
-          type="button"
-          aria-label="Đăng xuất"
-          onClick={onLogout}
-        >
-          <span className="logout-icon" aria-hidden="true"></span>
-        </button>
+        {showLogout && (
+          <button
+            className="icon-button logout"
+            type="button"
+            aria-label="Đăng xuất"
+            onClick={onLogout}
+          >
+            <span className="logout-icon" aria-hidden="true"></span>
+          </button>
+        )}
       </div>
     </header>
   );
