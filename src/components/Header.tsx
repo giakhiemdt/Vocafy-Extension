@@ -1,11 +1,14 @@
 import React from "react";
 
-export const Header: React.FC = () => {
+type Props = {
+  onLogout: () => void;
+};
+
+export const Header: React.FC<Props> = ({ onLogout }) => {
   return (
     <header className="header">
       <div className="brand">
         <img src="icons/logoFull.png" alt="Vocafy" />
-        <span>Vocafy</span>
       </div>
       <div className="header-actions">
         <button className="icon-button" type="button" aria-label="Đồng bộ">
@@ -13,6 +16,9 @@ export const Header: React.FC = () => {
         </button>
         <button className="icon-button" type="button" aria-label="Cài đặt">
           <span>⚙</span>
+        </button>
+        <button className="icon-button" type="button" aria-label="Đăng xuất" onClick={onLogout}>
+          <span>⎋</span>
         </button>
       </div>
     </header>

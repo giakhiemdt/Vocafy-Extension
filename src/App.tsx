@@ -105,9 +105,16 @@ export const App: React.FC = () => {
   const showEmpty = !loading && items.length === 0;
   const showLoadMore = items.length >= limit && !!accessToken;
 
+  const handleLogout = async () => {
+    await forceLogout();
+    setAccessToken(null);
+    setItems([]);
+    showToast("Đã đăng xuất");
+  };
+
   return (
     <div className="app">
-      <Header />
+      <Header onLogout={handleLogout} />
 
       <section className="section quick-action">
         <QuickAddButton onClick={handleQuickAdd} disabled={loading} />
@@ -117,7 +124,6 @@ export const App: React.FC = () => {
         {showEmpty ? (
           <div className="empty">
             <div>Chưa có từ vựng. Hãy lưu nhanh từ mới khi bạn đang làm việc.</div>
-            <QuickAddButton onClick={handleQuickAdd} />
           </div>
         ) : (
           <VocabList
