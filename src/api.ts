@@ -1,5 +1,7 @@
-export const exchangeFirebaseToken = async (idToken) => {
-  const response = await fetch("https://vocafy.milize-lena.space/api/auth/firebase", {
+const BASE_URL = "https://vocafy.milize-lena.space/api";
+
+export const exchangeFirebaseToken = async (idToken: string) => {
+  const response = await fetch(`${BASE_URL}/auth/firebase`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,43 +22,35 @@ export const exchangeFirebaseToken = async (idToken) => {
     throw new Error("Auth API response invalid.");
   }
 
-  return payload;
+  return payload as {
+    result: { accessToken: string; refreshToken?: string };
+  };
 };
 
-export const fetchMyVocabularies = async (accessToken, page = 0, size = 10) => {
-  if (!accessToken) {
-    throw new Error("Missing access token.");
-  }
-  const response = await fetch(
-    `https://vocafy.milize-lena.space/api/vocabularies/me?page=${page}&size=${size}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+export const fetchRecentVocabularies = async (accessToken: string, limit = 20) => {
+  const response = await fetch(`${BASE_URL}/vocab/recent?limit=${limit}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   if (response.status === 401) {
     const errorText = await response.text();
-    const error = new Error(`Vocab API unauthorized: ${errorText}`);
-    error.code = "INVALID_TOKEN";
+    const error = new Error(`Recent vocab unauthorized: ${errorText}`);
+    (error as Error & { code?: string }).code = "INVALID_TOKEN";
     throw error;
   }
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Vocab API failed: ${response.status} ${errorText}`);
+    throw new Error(`Recent vocab failed: ${response.status} ${errorText}`);
   }
 
   return response.json();
 };
 
-export const createQuickVocabulary = async (accessToken, payload) => {
-  if (!accessToken) {
-    throw new Error("Missing access token.");
-  }
-  const response = await fetch("https://vocafy.milize-lena.space/api/vocabularies/quick", {
+export const createQuickVocabulary = async (accessToken: string, payload: unknown) => {
+  const response = await fetch(`${BASE_URL}/vocab/quick`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +62,7 @@ export const createQuickVocabulary = async (accessToken, payload) => {
   if (response.status === 401) {
     const errorText = await response.text();
     const error = new Error(`Quick vocab unauthorized: ${errorText}`);
-    error.code = "INVALID_TOKEN";
+    (error as Error & { code?: string }).code = "INVALID_TOKEN";
     throw error;
   }
 
@@ -78,4 +72,12 @@ export const createQuickVocabulary = async (accessToken, payload) => {
   }
 
   return response.json();
+};
+
+export const updateQuickVocabulary = async (
+  _accessToken: string,
+  _id: string | number,
+  _payload: unknown
+) => {
+  return Promise.resolve({ success: true });
 };

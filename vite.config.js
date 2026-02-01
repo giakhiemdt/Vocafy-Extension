@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
 export default defineConfig(({ mode }) => {
@@ -6,6 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     root: "src",
     envDir: __dirname,
+    plugins: [react()],
     define: {
       "import.meta.env.VITE_FIREBASE_API_KEY": JSON.stringify(env.VITE_FIREBASE_API_KEY),
       "import.meta.env.VITE_FIREBASE_AUTH_DOMAIN": JSON.stringify(
