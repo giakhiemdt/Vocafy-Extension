@@ -4,6 +4,8 @@ export const removeLocal = (keys) => chrome.storage.local.remove(keys);
 
 export const loadAuthUser = async () => (await getLocal(["authUser"])).authUser || null;
 export const loadAuthToken = async () => (await getLocal(["authToken"])).authToken || null;
+export const loadAccessToken = async () =>
+  (await getLocal(["accessToken"])).accessToken || null;
 
 export const saveAuthToken = (token) => setLocal({ authToken: token });
 
@@ -29,4 +31,14 @@ export const saveUser = async (user) => {
 };
 
 export const clearAuthStorage = () =>
-  removeLocal(["authUser", "authToken", "accessToken", "refreshToken", "accessClaims"]);
+  removeLocal([
+    "authUser",
+    "authToken",
+    "accessToken",
+    "refreshToken",
+    "accessClaims",
+    "vocabularies",
+  ]);
+
+export const saveVocabularies = (payload) =>
+  payload ? setLocal({ vocabularies: payload }) : Promise.resolve();

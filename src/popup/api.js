@@ -22,3 +22,25 @@ export const exchangeFirebaseToken = async (idToken) => {
 
   return payload;
 };
+
+export const fetchMyVocabularies = async (accessToken, page = 0, size = 10) => {
+  if (!accessToken) {
+    throw new Error("Missing access token.");
+  }
+  const response = await fetch(
+    `https://vocafy.milize-lena.space/api/vocabularies/me?page=${page}&size=${size}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Vocab API failed: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
+};

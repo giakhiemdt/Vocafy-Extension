@@ -5,16 +5,18 @@ import {
   signOut,
 } from "firebase/auth/web-extension";
 
-import { exchangeFirebaseToken } from "./api.js";
+import { exchangeFirebaseToken, fetchMyVocabularies } from "./api.js";
 import { decodeJwtPayload } from "./jwt.js";
 import {
   clearAuthStorage,
+  loadAccessToken,
   loadAuthToken,
   loadAuthUser,
   saveAccessClaims,
   saveAuthToken,
   saveTokens,
   saveUser,
+  saveVocabularies,
 } from "./storage.js";
 
 const getChromeAuthToken = () =>
@@ -47,10 +49,21 @@ export const initAuth = async ({ auth, ui, loginBtn, signOutBtn }) => {
     await saveTokens(accessToken, refreshToken);
     const claims = decodeJwtPayload(accessToken);
     await saveAccessClaims(claims);
+    return accessToken;
+  };
+
+  const syncVocabularies = async (accessToken) => {
+    if (!accessToken) return;
+    const vocabPayload = await fetchMyVocabularies(accessToken, 0, 10);
+    await saveVocabularies(vocabPayload);
   };
 
   const cachedUser = await loadAuthUser();
   ui.setAuthState(cachedUser);
+  if (cachedUser) {
+    const cachedAccessToken = await loadAccessToken();
+    await syncVocabularies(cachedAccessToken);
+  }
 
   if (loginBtn) {
     loginBtn.addEventListener("click", async () => {
@@ -63,7 +76,8 @@ export const initAuth = async ({ auth, ui, loginBtn, signOutBtn }) => {
         const result = await signInWithCredential(auth, credential);
         const idToken = await result.user.getIdToken();
         const exchangePayload = await exchangeFirebaseToken(idToken);
-        await applyAccessPayload(exchangePayload);
+        const backendAccessToken = await applyAccessPayload(exchangePayload);
+        await syncVocabularies(backendAccessToken);
         await saveUser(result.user);
         ui.setStatus("", null);
         ui.setAuthState(result.user);
@@ -113,7 +127,8 @@ export const initAuth = async ({ auth, ui, loginBtn, signOutBtn }) => {
     const idToken = await user.getIdToken();
     try {
       const exchangePayload = await exchangeFirebaseToken(idToken);
-      await applyAccessPayload(exchangePayload);
+      const backendAccessToken = await applyAccessPayload(exchangePayload);
+      await syncVocabularies(backendAccessToken);
       ui.setStatus("", null);
     } catch (error) {
       console.error("Firebase token exchange error:", error);
