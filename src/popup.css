@@ -78,13 +78,13 @@ body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .icon-button {
   border: 0;
   background: transparent;
-  padding: 6px;
+  padding: 8px;
   border-radius: 999px;
   cursor: pointer;
 }
@@ -94,9 +94,29 @@ body {
 }
 
 .icon-button span {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   display: block;
+}
+
+.icon-button.logout {
+  border: 1px solid transparent;
+}
+
+.icon-button.logout:hover {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.logout-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  background-color: #ef4444;
+  -webkit-mask: no-repeat center / contain;
+  mask: no-repeat center / contain;
+  -webkit-mask-image: url(\"icons/LogoutIcon.png\");
+  mask-image: url(\"icons/LogoutIcon.png\");
 }
 
 .section {

@@ -17,8 +17,8 @@ export const Header: React.FC<Props> = ({ onLogout }) => {
         <button className="icon-button" type="button" aria-label="Cài đặt">
           <span>⚙</span>
         </button>
-        <button className="icon-button" type="button" aria-label="Đăng xuất" onClick={onLogout}>
-          <span>⎋</span>
+        <button className="icon-button logout" type="button" aria-label="Đăng xuất" onClick={onLogout}>
+          <span className="logout-icon" aria-hidden="true"></span>
         </button>
       </div>
     </header>
