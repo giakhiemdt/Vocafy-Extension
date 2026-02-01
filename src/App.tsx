@@ -7,7 +7,7 @@ import { QuickEditModal } from "./components/QuickEditModal";
 import { createQuickVocabulary, fetchRecentVocabularies, updateQuickVocabulary } from "./api";
 import { ensureAccessToken, forceLogout } from "./auth";
 import { VocabItem, VocabQuickPayload, VocabQuickEditPayload } from "./types";
-import { loadAccessToken } from "./storage";
+import { loadAccessToken, loadTheme, saveTheme } from "./storage";
 
 const mapRecent = (raw: any[]): VocabItem[] =>
   raw.map((item, idx) => ({
@@ -27,6 +27,7 @@ export const App: React.FC = () => {
   const [editItem, setEditItem] = useState<VocabItem | null>(null);
   const [toast, setToast] = useState<{ message: string; type?: "error" } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   const showToast = useCallback((message: string, type?: "error") => {
     setToast({ message, type });
@@ -53,6 +54,12 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
+      const storedTheme = await loadTheme();
+      const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+      const resolvedTheme = storedTheme || (prefersDark ? "dark" : "light");
+      setTheme(resolvedTheme);
+      document.documentElement.setAttribute("data-theme", resolvedTheme);
+
       const cached = await loadAccessToken();
       if (cached) {
         setAccessToken(cached);
@@ -62,6 +69,13 @@ export const App: React.FC = () => {
     };
     void init();
   }, [limit, loadRecent]);
+
+  const handleToggleTheme = async () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
+    await saveTheme(next);
+  };
 
   const handleQuickAdd = async () => {
     try {
@@ -114,7 +128,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="app">
-      <Header onLogout={handleLogout} />
+      <Header onLogout={handleLogout} theme={theme} onToggleTheme={handleToggleTheme} />
 
       <section className="section quick-action">
         <QuickAddButton onClick={handleQuickAdd} disabled={loading} />

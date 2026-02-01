@@ -6,6 +6,11 @@ export const loadAccessToken = async () => (await getLocal(["accessToken"])).acc
   | string
   | null;
 
+export const loadTheme = async () =>
+  ((await getLocal(["theme"])).theme as "light" | "dark" | undefined) || null;
+
+export const saveTheme = (theme: "light" | "dark") => setLocal({ theme });
+
 export const saveTokens = (accessToken: string, refreshToken?: string) =>
   setLocal({ accessToken, refreshToken: refreshToken || "" });
 
