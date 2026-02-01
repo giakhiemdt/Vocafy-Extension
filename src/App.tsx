@@ -147,12 +147,12 @@ export const App: React.FC = () => {
 
       <section className={`section ${!isLoggedIn ? "no-card" : ""}`}>
         {!isLoggedIn ? (
-          <div className="marketing marketing--stretch">
+          <div className="marketing">
             <div className="subtitle">Đăng nhập để đồng bộ từ vựng</div>
             <div className="badge">AI-Powered Vocabulary Learning</div>
             <div className="hero-title">
-              Học từ vựng <span className="accent">trực quan</span> và{" "}
-              <span className="accent-2">đơn giản</span>
+              Học từ vựng <span className="accent">trực quan</span> và <br />
+              <span className="accent-2 nowrap">đơn giản</span>
             </div>
             <div className="hero-desc">
               Trải nghiệm học nhanh với gợi ý thông minh và đồng bộ dữ liệu mọi lúc.

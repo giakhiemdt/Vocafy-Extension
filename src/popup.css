@@ -174,17 +174,13 @@ body {
 }
 
 .marketing {
-  display: grid;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   text-align: center;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
   padding: 28px 16px;
-}
-
-.marketing--stretch {
-  height: 100%;
-  align-content: space-between;
 }
 
 .marketing.no-card {
@@ -216,6 +212,7 @@ body {
   font-size: 18px;
   font-weight: 700;
   line-height: 1.25;
+  max-width: 260px;
 }
 
 .hero-title .accent {
@@ -224,6 +221,10 @@ body {
 
 .hero-title .accent-2 {
   color: #10b981;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .hero-desc {
